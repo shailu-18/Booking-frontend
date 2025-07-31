@@ -13,13 +13,10 @@ export default function App() {
   const [travellerAge, setTravellerAge] = useState("");
   const [numPeople, setNumPeople] = useState("");
 
-  const fetchBookings = async () => {
-    try {
-      const res = await axios.get(`${API}/api/bookings`);
-      setBookings(res.data);
-    } catch (err) {
-      console.error(err);
-    }
+   const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+    setPage("confirmation");
   };
 
   return (
