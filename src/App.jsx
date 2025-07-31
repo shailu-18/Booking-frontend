@@ -22,22 +22,6 @@ export default function App() {
     }
   };
 
-  const fetchFeedback = async () => {
-    try {
-      const res = await axios.get(`${API}/api/feedback`);
-      setfeedback(res.data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
-    setPage("confirmation");
-  };
-
   return (
     <div className="app">
       <nav className="navbar">
