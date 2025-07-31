@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from 'axios';
 import "./index.css";
 
 export default function App() {
@@ -23,14 +22,6 @@ export default function App() {
     }
   };
 
-   axios.post(`${API}/bookings`, formData)
-  .then(res => console.log("Submitted:", res.data))
-  .catch(err => console.error("Submission error:", err));
-  
-  axios.post(`${API}/feedback`, formData)
-  .then(res => console.log("Submitted:", res.data))
-  .catch(err => console.error("Submission error:", err));
-                              
   const fetchFeedback = async () => {
     try {
       const res = await axios.get(`${API}/api/feedback`);
@@ -39,10 +30,6 @@ export default function App() {
       console.error(err);
     }
   };
-
-  useEffect(() => { fetchFeedback(); }, []);
-
-  useEffect(() => { fetchBookings(); }, []);
 
 
   const handleSubmit = (e) => {
