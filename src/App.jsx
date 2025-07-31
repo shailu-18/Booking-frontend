@@ -13,6 +13,28 @@ export default function App() {
   const [travellerAge, setTravellerAge] = useState("");
   const [numPeople, setNumPeople] = useState("");
 
+  const fetchBookings = async () => {
+    try {
+      const res = await axios.get(`${API}/api/bookings`);
+      setBookings(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  
+  const fetchFeedback = async () => {
+    try {
+      const res = await axios.get(`${API}/api/feedback`);
+      setfeedback(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => { fetchFeedback(); }, []);
+
+  useEffect(() => { fetchBookings(); }, []);
 
 
   const handleSubmit = (e) => {
