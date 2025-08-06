@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./index.css";
 
+const API = import.meta.env.VITE_API_URL;
+
 export default function App() {
   const [page, setPage] = useState("home");
   const [tripDays, setTripDays] = useState("1");
@@ -14,12 +16,12 @@ export default function App() {
   const [numPeople, setNumPeople] = useState("");
 
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
     setPage("confirmation");
   };
+
 
   return (
     <div className="app">
@@ -606,6 +608,7 @@ export default function App() {
   </div>
 ) : null
 }
+
 
       {page === "booking" && (
         <section className="booking-form">
