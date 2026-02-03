@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import "./index.css";
 
 const API = import.meta.env.VITE_API_URL;
@@ -14,14 +15,58 @@ export default function App() {
   const [travellerList, setTravellerList] = useState([]);
   const [travellerAge, setTravellerAge] = useState("");
   const [numPeople, setNumPeople] = useState("");
+ const [contact, setContact] = useState("");
+  const [email, setEmail] = useState("");
 
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
-    setPage("confirmation");
+  const bookingData = {
+    customerName: travellerList[0]?.name || "Guest",
+    customerEmail: email,
+    contactNumber: contact,
+    destination: tripDestination,
+    tripDuration: tripDays,
+    numberOfPeople: Number(numPeople),
+    travelers: travellerList,
+    travelDate: new Date(form.date),
+    specialRequests: "",
   };
 
+
+  try {
+    await axios.post(`${API}/api/bookings`, bookingData);
+    setSubmitted(true);
+    setPage("confirmation");
+  } catch (error) {
+  console.error("Booking error:", error.response?.data || error.message);
+
+  alert(
+    error.response?.data?.error ||
+    error.response?.data?.message ||
+    "Booking failed"
+  );
+}
+
+};
+
+const handleFeedbackSubmit = async (e) => {
+  e.preventDefault();
+
+  const feedbackData = {
+    email: e.target.email.value,
+    message: e.target.message.value,
+  };
+
+  try {
+    await axios.post(`${API}/api/feedback`, feedbackData);
+    alert("Feedback submitted successfully!");
+    e.target.reset();
+  } catch (error) {
+    console.error(error);
+    alert("Failed to submit feedback");
+  }
+};
 
   return (
     <div className="app">
@@ -98,9 +143,10 @@ export default function App() {
         <div className="feedback-form">
           <div className="feedback-container">
              <h2>Feedback Form</h2>
-          <form>
-            <input type="email" placeholder="Your Email" required />
-            <textarea placeholder="Your Message" required></textarea>
+          <form onSubmit={handleFeedbackSubmit}>
+            <input type="email" name="email" placeholder="Your Email" required/>
+            <textarea name="message" placeholder="Your Message" required></textarea>
+
             <button type="submit">Submit</button>
           </form>
           </div>
@@ -645,14 +691,12 @@ export default function App() {
     value={travellerName}
     onChange={(e) => setTravellerName(e.target.value)}
     placeholder="Enter Name"
-    required
   />
   <input
     type="number"
     value={travellerAge}
     onChange={(e) => setTravellerAge(e.target.value)}
     placeholder="Enter Age"
-    required
   />
   <button
   type="button"
@@ -669,7 +713,7 @@ export default function App() {
 
     setTravellerList([
       ...travellerList,
-      { name: travellerName.trim(), age: travellerAge.trim() },
+      { name: travellerName.trim(), age: Number(travellerAge) },
     ]);
     setTravellerName("");
     setTravellerAge("");
@@ -688,8 +732,20 @@ export default function App() {
   ))}
 </ul>
 
-            <input type="tel" placeholder="Contact Number" required />
-            <input type="email" placeholder="Email" required />
+            <input
+  type="tel"
+  placeholder="Contact Number"
+  value={contact}
+  onChange={(e) => setContact(e.target.value)}
+  required
+/>
+            <input
+  type="email"
+  placeholder="Email"
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+  required
+/>
             <button type="submit">Book Now</button>
           </form>
         </section>
