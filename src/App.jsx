@@ -671,7 +671,7 @@ const handleFeedbackSubmit = async (e) => {
       <input
         type="date"
         name="date"
-        value={form.date}
+        value={tripDate}
         onChange={(e) => setForm({ ...form, date: e.target.value })}
         required
       />
