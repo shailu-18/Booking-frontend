@@ -28,7 +28,7 @@ const handleSubmit = async (e) => {
     destination: tripDestination,
     tripDuration: tripDays,
     numberOfPeople: Number(numPeople),
-    travelers: travellerList,
+    travellers: travellerList,
     travelDate: new Date(form.date),
     specialRequests: "",
   };
