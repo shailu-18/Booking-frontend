@@ -26,10 +26,10 @@ const handleSubmit = async (e) => {
     customerEmail: email,
     contactNumber: contact,
     destination: tripDestination,
-    tripDuration: tripDays,
+    tripDuration: Number(tripDays),
     numberOfPeople: Number(numPeople),
     travellers: travellerList,
-    travelDate: new Date(form.date),
+    travelDate: new Date(tripDate),
     specialRequests: "",
   };
 
